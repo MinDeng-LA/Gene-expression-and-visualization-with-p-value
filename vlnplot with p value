@@ -24,3 +24,10 @@ p <- ggplot(df, aes(x = stim, y = expr, fill = stim)) +
 # add p-values (Wilcoxon by default)
 p + stat_compare_means(comparisons = my_comp, label = "p.format")
 ggsave(".//T_cell with p value.pdf", width =6 , height =6)
+
+#Method 2: add p-value from method #1 manually.  
+Idents(T_cell) <- "stim" 
+levels(T_cell) 
+T_cell$stim <- factor(T_cell$stim, levels = c("nonlesional","lesional"))
+VlnPlot(T_cell,features = Neutrophil_degranulation, group.by = "celltype", split.by = "stim", cols=c("#C1E6F3","#E59CC4"))
+ggsave(".//T_cell.pdf", width =6 , height =4)
